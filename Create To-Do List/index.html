@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="todo-app">
+            <div style="display: flex;
+    justify-content: space-between;">
+                <div>
+                    <h4>Hello, </h4>
+                    <h2 id="time-of-day" style="color: red;"></h2>
+                </div>
+                <div>
+                    <h4>Time: </h4>
+                    <p id="current-time" style="color: red;"></p>
+                </div>
+
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <img src="./img/to-do.png" alt="" style="width: 200px; height: 100px;">
+            </div>
+            <div class="row">
+                <input type="text" placeholder="Add your text" id="input-box" value="">
+                <button onclick="addTask()"> Add</button>
+            </div>
+            <ul id="list-container">
+                <!-- <li class="checked">Task1</li>
+                <li>2</li>
+                <li>3</li> -->
+            </ul>
+        </div>
+    </div>
+    <script text="">
+        const inputBox = document.getElementById("input-box");
+        const listContainer = document.getElementById("list-container");
+        function addTask() {
+            if (inputBox.value === '') {
+                alert("You must write something!")
+            }
+            else {
+                let li = document.createElement("li");
+                li.innerHTML = inputBox.value;
+                listContainer.appendChild(li)
+                let span = document.createElement("span")
+                span.innerHTML = "\u00d7"
+                li.appendChild(span);
+
+            }
+            inputBox.value = "";
+            saveData();
+        }
+
+        listContainer.addEventListener("click", function (e) {
+            if (e.target.tagName === "LI") {
+                e.target.classList.toggle("checked");
+                saveData();
+            } else if (e.target.tagName === "SPAN") {
+                e.target.parentElement.remove();
+                saveData();
+            }
+        }, false);
+
+
+        function saveData() {
+            localStorage.setItem("data", listContainer.innerHTML)
+        }
+
+        function showTask() {
+            listContainer.innerHTML = localStorage.getItem("data");
+        }
+        showTask();
+
+
+        inputBox.addEventListener('keydown', function (event) {
+            if (event.keyCode === 13) {
+                actionOnEnter();
+            }
+        });
+        function actionOnEnter() {
+            if (inputBox.value === '') {
+                alert("You must write something!")
+            }
+            else {
+                let li = document.createElement("li");
+                li.innerHTML = inputBox.value;
+                listContainer.appendChild(li)
+                let span = document.createElement("span")
+                span.innerHTML = "\u00d7"
+                li.appendChild(span);
+
+            }
+            inputBox.value = "";
+            saveData();
+        }
+        function displayCurrentTime() {
+            var currentTime = new Date(); // Lấy thời gian hiện tại
+
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var seconds = currentTime.getSeconds();
+
+            // Kiểm tra nếu giờ, phút, giây có một chữ số thì thêm số 0 đằng trước
+            hours = (hours < 10 ? "0" : "") + hours;
+            minutes = (minutes < 10 ? "0" : "") + minutes;
+            seconds = (seconds < 10 ? "0" : "") + seconds;
+
+            // Định dạng thời gian theo dạng hh:mm:ss
+            var formattedTime = hours + ":" + minutes + ":" + seconds;
+
+
+            document.getElementById("current-time").innerHTML = formattedTime;
+
+
+//Hiện Buổi trong ngày
+            var timeOfDay;
+
+            if (hours < 12) {
+                timeOfDay = "Good morning! ";
+            } else if (12 <= hours <= 18) {
+                timeOfDay = "Good Afternoon!";
+            } else {
+                timeOfDay = "Good Evening!";
+            }
+
+            document.getElementById("time-of-day").innerHTML = timeOfDay;
+        }
+        setInterval(displayCurrentTime, 1000);
+        window.onload = displayCurrentTime;
+
+
+
+
+    </script>
+
+</body>
+
+</html>
