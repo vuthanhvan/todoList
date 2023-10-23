@@ -51,7 +51,6 @@
                 let span = document.createElement("span")
                 span.innerHTML = "\u00d7"
                 li.appendChild(span);
-
             }
             inputBox.value = "";
             saveData();
@@ -67,7 +66,6 @@
             }
         }, false);
 
-
         function saveData() {
             localStorage.setItem("data", listContainer.innerHTML)
         }
@@ -76,7 +74,6 @@
             listContainer.innerHTML = localStorage.getItem("data");
         }
         showTask();
-
 
         inputBox.addEventListener('keydown', function (event) {
             if (event.keyCode === 13) {
@@ -94,7 +91,6 @@
                 let span = document.createElement("span")
                 span.innerHTML = "\u00d7"
                 li.appendChild(span);
-
             }
             inputBox.value = "";
             saveData();
@@ -117,8 +113,7 @@
 
             document.getElementById("current-time").innerHTML = formattedTime;
 
-
-//Hiện Buổi trong ngày
+            //Hiện Buổi trong ngày
             var timeOfDay;
 
             if (hours < 12) {
@@ -133,9 +128,6 @@
         }
         setInterval(displayCurrentTime, 1000);
         window.onload = displayCurrentTime;
-
-
-
 
     </script>
 
